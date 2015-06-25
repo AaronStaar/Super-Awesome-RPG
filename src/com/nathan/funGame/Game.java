@@ -14,8 +14,7 @@ public class Game extends BasicGame {
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -27,8 +26,7 @@ public class Game extends BasicGame {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub
 		
 	}
