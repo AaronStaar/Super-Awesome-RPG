@@ -33,7 +33,9 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		// TODO Auto-generated method stub
-		entityList.add(new Box(new Point(170, 120), 300, 300, 0));
+		entityList.add(new Box(new Point(150, 100), 80, 80, 0, 13, -14));
+		entityList.add(new Box(new Point(150, 100), 40, 40, 0, -12, 13));
+		entityList.add(new Box(new Point(650, 400), 460, 408, 0, -7, 2));
 		
 	}
 
