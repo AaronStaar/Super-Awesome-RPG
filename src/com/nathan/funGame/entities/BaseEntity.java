@@ -7,13 +7,13 @@ import org.newdawn.slick.geom.Point;
 
 public abstract class BaseEntity {
 	protected Point position;
-	protected int length;
+	protected int width;
 	protected int height;
 	protected double rotation;
 	
 	public BaseEntity() {
 		this.position = new Point(0, 0);
-		this.length =  0;
+		this.width =  0;
 		this.height = 0;
 		this.rotation = 0;
 	}
@@ -22,9 +22,9 @@ public abstract class BaseEntity {
 		this.position = p;
 	}
 	
-	public BaseEntity (Point p, int l, int h, double rot) {
+	public BaseEntity (Point p, int w, int h, double rot) {
 		this.position = p;
-		this.length = l;
+		this.width = w;
 		this.height = h;
 		this.rotation = rot;
 	}
