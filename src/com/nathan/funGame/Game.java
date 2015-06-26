@@ -1,48 +1,67 @@
 package com.nathan.funGame;
 
-import java.util.ArrayList;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Point;
 
-import com.nathan.funGame.entities.BaseEntity;
 import com.nathan.funGame.entities.Box;
+import com.nathan.funGame.events.Event;
+import com.nathan.funGame.events.EventHandler;
+import com.nathan.funGame.events.EventSystem;
 
-
+/**
+ * Contains all the code that makes events work. It should also be used to invoke and bind to "global" or "miscellaneous" events.
+ * @author Isaac
+ *
+ */
 public class Game extends BasicGame {
 	
-	private ArrayList<BaseEntity> entityList;
+	//Since we can't extend two classes
+	private static EventSystem es = new EventSystem();
+	private InputBindings bindings;
 	
 	public Game(String title) {
 		super(title);
-		// TODO Auto-generated constructor stub
-		this.entityList = new ArrayList<BaseEntity>();
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		for (int i = 0; i < entityList.size(); i++) {
-			entityList.get(i).render(container, g);
-		}
-		
+		EntityManager.instance.__renderEntities(container, g);
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
-		entityList.add(new Box(new Point(150, 100), 80, 80, 0, 13, -14));
-		entityList.add(new Box(new Point(150, 100), 40, 40, 0, -12, 13));
-		entityList.add(new Box(new Point(650, 400), 460, 408, 0, -7, 2));
+		bindings = new InputBindings(container.getInput());
 		
+		EntityManager.instance.spawn(new Box(0, 100, 100, 25 , 25));
+		EntityManager.instance.spawn(new Box(-1, 110, 110, 25 , 25));
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		for (BaseEntity e : entityList) {
-			e.update(container, delta);
-		}
+		EntityManager.instance.__updateEntities(container, delta);
+	}
+	
+	/**
+	 * Adds an EventLister to this object. The listener will be invoked whenever this entity, or other objects, calls it's invokeEvent method.
+	 * @param e The event to listen for
+	 * @param handler The EventHandler to handle the event
+	 */
+	public static void addEventListener(Event e, EventHandler handler) {
+		es.addEventListener(e, handler);
+	}
+	
+	public static void addEventListener(String eventName, EventHandler handler) {
+		es.addEventListener(eventName, handler);
+	}
+	
+	/**
+	 * Invokes an event in relation to the entity. It will call the EventHandler of other objects that have attached themselves to this event.
+	 * @param e The event to invoke
+	 */
+	public static void invokeEvent(Event e) {
+		es.invokeEvent(e);
 	}
 }
