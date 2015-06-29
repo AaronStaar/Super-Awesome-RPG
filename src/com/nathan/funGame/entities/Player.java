@@ -9,21 +9,29 @@ import org.newdawn.slick.SlickException;
 public class Player extends BaseEntity {
 	public int x = 0;
 	public int y = 0;
-	public int width = 50;
-	public int height = 100;
+	public int width = 25;
+	public int height = 25;
+	public static int location = -1;
 	
-	public Player(int contHeight) {
-		super(1);
-		y =  y - contHeight;
+	public Player(int rectHeight) {
+		super(location);
+		y =  y + (480 - rectHeight);
 	}
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub
 		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-			x = x + 1;
-		} else if ((container.getInput().isKeyDown(Input.KEY_LEFT))) {
-			x = x - 1;
+			x = x + 3;
+		}
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
+			x = x - 3;
+		}
+		if (container.getInput().isKeyDown(Input.KEY_UP)) {
+			y = y - 3;
+		}
+		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
+			y = y + 3;
 		}
 	}
 
