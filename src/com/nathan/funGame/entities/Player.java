@@ -5,56 +5,67 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 import com.nathan.funGame.EntityManager;
 
 public class Player extends BaseEntity {
-	private int x = 0;
-	private int y = 0;
-	private int width = 25;
-	private int height = 25;
+	
+	private Rectangle sprite;
+	private float speed = 350;
 	
 	public Player(int zIndex) {
 		super(zIndex);
+		sprite = new Rectangle(0, 0, 35, 35);
 	}
 	
-	public Player(int zIndex, int x, int y, int width, int height) {
+	public Player(int zIndex, float centerX, float centerY, float width, float height, float speed) {
 		super(zIndex);
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		sprite = new Rectangle(0, 0, width, height);
+		sprite.setCenterX(centerX);
+		sprite.setCenterY(centerY);
+		this.speed = speed;
 	}
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		// TODO Auto-generated method stub
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-			x = x + 3;
-		}
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-			x = x - 3;
-		}
-		if (container.getInput().isKeyDown(Input.KEY_UP)) {
-			y = y - 3;
-		}
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-			y = y + 3;
-		}
+		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+			sprite.setCenterX(sprite.getCenterX() + (speed * 0.001f * delta));
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)) 
+			sprite.setCenterX(sprite.getCenterX() - (speed * 0.001f * delta));
+		if (container.getInput().isKeyDown(Input.KEY_UP)) 
+			sprite.setCenterY(sprite.getCenterY() - (speed * 0.001f * delta));
+		if (container.getInput().isKeyDown(Input.KEY_DOWN)) 
+			sprite.setCenterY(sprite.getCenterY() + (speed * 0.001f * delta));
 		
-		if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
-			EntityManager.getInstance().remove(this);
-			EntityManager.getInstance().spawn(new Player(getZIndex() + 1, x, y, width + 20, height + 20));
-		} if (getZIndex() > 2)
-			 Player(2, x, y, 70, 70);
+		if (container.getInput().isKeyPressed(Input.KEY_A)) {
+			if(getZIndex() < 3) {
+				EntityManager.getInstance().remove(this);
+				EntityManager.getInstance().spawn(new Player(getZIndex() + 1, sprite.getCenterX(), sprite.getCenterY(), 
+															sprite.getWidth() + 7, sprite.getHeight() + 7, speed - 70));
+			}
+		} 
+		
+		if (container.getInput().isKeyPressed(Input.KEY_D)) {
+			if (getZIndex() > 1) {
+				EntityManager.getInstance().remove(this);
+				EntityManager.getInstance().spawn(new Player(getZIndex() - 1, sprite.getCenterX(), sprite.getCenterY(), 
+						sprite.getWidth() - 7, sprite.getHeight() - 7, speed + 70));
+			}
+		}
+			
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g)	throws SlickException {
 		// TODO Auto-generated method stub
-		g.fillRect(x, y, width, height);
-		g.setColor(Color.green);
-		
+		if(getZIndex() == 1)
+			g.setColor(Color.green);
+		else if(getZIndex() == 2)
+			g.setColor(Color.blue);
+		else if(getZIndex() == 3)
+			g.setColor(Color.red);
+		g.fill(sprite);
 	}
 
 }

@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			AppGameContainer app = new AppGameContainer(new Game("My Game Title"));
+			AppGameContainer app = new AppGameContainer(new Game("Super Awesome Game"));
 			app.setDisplayMode(640, 480, false);
 			app.start();
 		} catch (SlickException e) {
