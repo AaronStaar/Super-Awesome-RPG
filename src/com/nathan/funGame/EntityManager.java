@@ -25,6 +25,7 @@ public class EntityManager extends EventSystem {
 	
 	//Ordering it this way so we can render the entities based on z-index
 	private TreeMap<Integer, ArrayList<BaseEntity>> entityList = new TreeMap<Integer, ArrayList<BaseEntity>>();
+	private ArrayList<BaseEntity> despawnList = new ArrayList<>();
 	
 	private EntityManager() {}
 	
@@ -47,6 +48,11 @@ public class EntityManager extends EventSystem {
 		for(Map.Entry<Integer, ArrayList<BaseEntity>> es : entityList.entrySet()) {
 			for(BaseEntity ent : es.getValue())
 				ent.update(container, delta);
+		}
+		
+		//Depsawn entities
+		for(BaseEntity d : despawnList) {
+			__remove(d);
 		}
 	}
 	
@@ -90,5 +96,13 @@ public class EntityManager extends EventSystem {
 		this.invokeEvent(new SpawnEvent(index));
 	}
 	
+	private void __remove(BaseEntity ent) {
+		ArrayList<BaseEntity> updateList = entityList.get(ent.getZIndex());
+		updateList.remove(ent);
+		entityList.put(ent.getZIndex(), updateList);
+	}
 	
+	public void remove(BaseEntity ent) {
+		despawnList.add(ent);
+	}
 }

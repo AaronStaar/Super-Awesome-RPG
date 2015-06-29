@@ -6,16 +6,24 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import com.nathan.funGame.EntityManager;
+
 public class Player extends BaseEntity {
-	public int x = 0;
-	public int y = 0;
-	public int width = 25;
-	public int height = 25;
-	public static int location = -1;
+	private int x = 0;
+	private int y = 0;
+	private int width = 25;
+	private int height = 25;
 	
-	public Player(int rectHeight) {
-		super(location);
-		y =  y + (480 - rectHeight);
+	public Player(int zIndex) {
+		super(zIndex);
+	}
+	
+	public Player(int zIndex, int x, int y, int width, int height) {
+		super(zIndex);
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 	}
 	
 	@Override
@@ -33,6 +41,12 @@ public class Player extends BaseEntity {
 		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
 			y = y + 3;
 		}
+		
+		if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
+			EntityManager.getInstance().remove(this);
+			EntityManager.getInstance().spawn(new Player(getZIndex() + 1, x, y, width + 20, height + 20));
+		} if (getZIndex() > 2)
+			 Player(2, x, y, 70, 70);
 	}
 
 	@Override
