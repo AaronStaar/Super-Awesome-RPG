@@ -42,6 +42,19 @@ public class Player extends BaseEntity implements Collidable {
 		if (container.getInput().isKeyDown(Input.KEY_DOWN)) 
 			sprite.setCenterY(sprite.getCenterY() + (speed * 0.001f * delta));
 		
+		if (sprite.getX() > 640 - sprite.getWidth()) {
+			sprite.setX(640 - sprite.getWidth());
+		}
+		if (sprite.getX() < 1) {
+			sprite.setX(0);
+		}
+		if (sprite.getY() > 480 - sprite.getHeight()) {
+			sprite.setY(480 -  sprite.getHeight());
+		}
+		if (sprite.getY() < 1) {
+			sprite.setY(0);
+		}
+		
 		if (container.getInput().isKeyPressed(Input.KEY_A)) {
 			if(getZIndex() < 3) {
 				EntityManager.getInstance().remove(this);
@@ -75,13 +88,13 @@ public class Player extends BaseEntity implements Collidable {
 	@Override
 	public Shape getCollisionBouds() {
 		// TODO Auto-generated method stub
-		return null;
+		return sprite;
 	}
 
 	@Override
 	public boolean collidesWith(Collidable c) {
 		// TODO Auto-generated method stub
-		return false;
+		return sprite.intersects(c.getCollisionBouds());
 	}
 
 }
