@@ -10,5 +10,6 @@ public class Event {
 	
 	public Event(String name, Object[] data) {
 		this.data = data;
+		this.name = name;
 	}
 }

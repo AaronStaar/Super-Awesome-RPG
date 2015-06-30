@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import com.nathan.funGame.collision.CollisionSystem;
 import com.nathan.funGame.entities.Player;
 import com.nathan.funGame.entities.RectangleLayer1;
 import com.nathan.funGame.events.Event;
@@ -43,6 +44,7 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		EntityManager.instance.__updateEntities(container, delta);
+		CollisionSystem.getInstance().update();
 	}
 	
 	/**

@@ -6,40 +6,50 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
-public class RectangleLayer1 extends BaseEntity {
+import com.nathan.funGame.collision.Collidable;
+import com.nathan.funGame.collision.CollisionSystem;
+
+public class RectangleLayer1 extends BaseEntity implements Collidable {
 	private Random r = new Random();
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+	private Rectangle sprite;
 		
 	public RectangleLayer1() {
 		super(1);
-		this.x = r.nextInt(641);
-		this.y = r.nextInt(481);
-		this.width = r.nextInt(150);
-		this.height = r.nextInt(150);
+		CollisionSystem.getInstance().register(this);
+		
+		this.sprite = new Rectangle(r.nextFloat() * 640, r.nextFloat() * 420, r.nextFloat() * 150, r.nextFloat() * 150);
 	}
 
 	
 	
 	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-		if () {
-			
-		}
+		sprite.setX(sprite.getX() + 100 * 0.001f * delta);
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.setColor(Color.green);
-		g.fillRect(x, 0 - height, width, height);
-		g.fillRect(x, container.getHeight(), width, height);
-		g.fillRect(0 - width, y, width, height);
-		g.fillRect(container.getWidth(), y, width, height);
+		g.fill(sprite);
+	}
+
+
+
+	@Override
+	public Shape getCollisionBouds() {
+		// TODO Auto-generated method stub
+		return sprite;
+	}
+
+
+
+	@Override
+	public boolean collidesWith(Collidable c) {
+		return sprite.intersects(c.getCollisionBouds());
 	}
 
 }

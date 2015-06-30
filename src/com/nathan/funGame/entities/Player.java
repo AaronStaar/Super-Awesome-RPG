@@ -6,17 +6,20 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import com.nathan.funGame.EntityManager;
+import com.nathan.funGame.collision.Collidable;
+import com.nathan.funGame.collision.CollisionSystem;
 
-public class Player extends BaseEntity {
+public class Player extends BaseEntity implements Collidable {
 	
 	private Rectangle sprite;
 	private float speed = 350;
 	
 	public Player(int zIndex) {
 		super(zIndex);
-		sprite = new Rectangle(0, 0, 35, 35);
+		sprite = new Rectangle(0, 0, 20, 20);
 	}
 	
 	public Player(int zIndex, float centerX, float centerY, float width, float height, float speed) {
@@ -25,6 +28,7 @@ public class Player extends BaseEntity {
 		sprite.setCenterX(centerX);
 		sprite.setCenterY(centerY);
 		this.speed = speed;
+		CollisionSystem.getInstance().register(this);
 	}
 	
 	@Override
@@ -66,6 +70,18 @@ public class Player extends BaseEntity {
 		else if(getZIndex() == 3)
 			g.setColor(Color.red);
 		g.fill(sprite);
+	}
+
+	@Override
+	public Shape getCollisionBouds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean collidesWith(Collidable c) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
