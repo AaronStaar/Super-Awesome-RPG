@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import com.nathan.funGame.entities.Player;
+import com.nathan.funGame.entities.RectangleLayer1;
 import com.nathan.funGame.events.Event;
 import com.nathan.funGame.events.EventHandler;
 import com.nathan.funGame.events.EventSystem;
@@ -36,6 +37,7 @@ public class Game extends BasicGame {
 		bindings = new InputBindings(container.getInput());
 		
 		EntityManager.instance.spawn(new Player(1));
+		EntityManager.instance.spawn(new RectangleLayer1());
 	}
 
 	@Override
