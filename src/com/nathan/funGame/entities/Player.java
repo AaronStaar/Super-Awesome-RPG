@@ -65,14 +65,14 @@ public class Player extends BaseEntity implements Collidable {
 		if (container.getInput().isKeyDown(Input.KEY_DOWN)) 
 			sprite.setCenterY(sprite.getCenterY() + (speed * 0.001f * delta));
 		
-		if (sprite.getX() > 640 - sprite.getWidth()) {
-			sprite.setX(640 - sprite.getWidth());
+		if (sprite.getX() > 1920 - sprite.getWidth()) {
+			sprite.setX(1920 - sprite.getWidth());
 		}
 		if (sprite.getX() < 1) {
 			sprite.setX(0);
 		}
-		if (sprite.getY() > 480 - sprite.getHeight()) {
-			sprite.setY(480 -  sprite.getHeight());
+		if (sprite.getY() > 1080 - sprite.getHeight()) {
+			sprite.setY(1080 -  sprite.getHeight());
 		}
 		if (sprite.getY() < 1) {
 			sprite.setY(0);
@@ -116,7 +116,8 @@ public class Player extends BaseEntity implements Collidable {
 		g.drawString("Score: " + yourScore, 8, 50);
 		
 		if (isDead) {
-			g.drawString("GAME OVER, your score is " + yourScore, 225, 230);
+			g.drawString("GAME OVER, your score is " + yourScore, 900, 530);
+			g.setColor(Color.orange);
 		}
 		
 	}

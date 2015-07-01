@@ -30,20 +30,20 @@ public class Game extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		EntityManager.instance.__renderEntities(container, g);
+		EntityManager.getInstance().__renderEntities(container, g);
+		EntityManager.getInstance().spawn(new RectangleLayer1(500, 500));
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		bindings = new InputBindings(container.getInput());
 		
-		EntityManager.instance.spawn(new Player(1));
-		EntityManager.instance.spawn(new RectangleLayer1());
+		EntityManager.getInstance().spawn(new Player(1));
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		EntityManager.instance.__updateEntities(container, delta);
+		EntityManager.getInstance().__updateEntities(container, delta);
 		CollisionSystem.getInstance().update();
 	}
 	

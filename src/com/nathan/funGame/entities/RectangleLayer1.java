@@ -16,13 +16,13 @@ public class RectangleLayer1 extends BaseEntity implements Collidable {
 	private Random r = new Random();
 	private Rectangle sprite;
 		
-	public RectangleLayer1() {
+	public RectangleLayer1(int x, int y) {
 		super(1);
+		x = r.nextInt(1920);
+		y = r.nextInt(1080);
 		CollisionSystem.getInstance().register(this);
-		
-		this.sprite = new Rectangle(r.nextFloat() * 640, r.nextFloat() * 420, r.nextFloat() * 150, r.nextFloat() * 150);
+		this.sprite = new Rectangle(x, y, r.nextFloat() * 100, r.nextFloat() * 100);
 	}
-
 	
 	
 	@Override

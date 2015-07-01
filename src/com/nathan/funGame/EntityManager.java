@@ -21,7 +21,7 @@ import com.nathan.funGame.events.SpawnEvent;
  */
 public class EntityManager extends EventSystem {
 	
-	static EntityManager instance = new EntityManager();
+	private static EntityManager instance = new EntityManager();
 	
 	//Ordering it this way so we can render the entities based on z-index
 	private TreeMap<Integer, ArrayList<BaseEntity>> entityList = new TreeMap<Integer, ArrayList<BaseEntity>>();
