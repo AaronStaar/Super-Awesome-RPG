@@ -9,26 +9,49 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import com.nathan.funGame.EntityManager;
+import com.nathan.funGame.Game;
 import com.nathan.funGame.collision.Collidable;
 import com.nathan.funGame.collision.CollisionSystem;
+import com.nathan.funGame.events.Event;
+import com.nathan.funGame.events.EventHandler;
 
 public class Player extends BaseEntity implements Collidable {
 	
 	private Rectangle sprite;
 	private float speed = 350;
+	private static int yourScore = 0;
+	private static boolean isDead = false;
+	private int timer = 0;
 	
 	public Player(int zIndex) {
 		super(zIndex);
 		sprite = new Rectangle(0, 0, 20, 20);
+		setupCollision();
 	}
 	
-	public Player(int zIndex, float centerX, float centerY, float width, float height, float speed) {
+	public Player (int zIndex, float centerX, float centerY, float width, float height, float speed) {
 		super(zIndex);
 		sprite = new Rectangle(0, 0, width, height);
 		sprite.setCenterX(centerX);
 		sprite.setCenterY(centerY);
 		this.speed = speed;
+		setupCollision();
+	}
+	
+	private void setupCollision() {
 		CollisionSystem.getInstance().register(this);
+
+		addEventListener("CollisionEvent", new EventHandler() {
+
+			@Override
+			public void handleEvent(Event e) {
+				if(e.data[0] instanceof RectangleLayer1) {
+					RectangleLayer1 rl1 = (RectangleLayer1) e.data[0];
+					isDead = true;
+				}
+			}
+
+		});
 	}
 	
 	@Override
@@ -70,7 +93,13 @@ public class Player extends BaseEntity implements Collidable {
 						sprite.getWidth() - 7, sprite.getHeight() - 7, speed + 70));
 			}
 		}
-			
+		
+		if(!isDead & timer >= 1000) {
+			yourScore += Math.ceil(2) + (sprite.getHeight()) / 4;
+			timer = 0;
+		} else {
+			timer += delta;
+		}
 	}
 
 	@Override
@@ -79,21 +108,27 @@ public class Player extends BaseEntity implements Collidable {
 		if(getZIndex() == 1)
 			g.setColor(Color.green);
 		else if(getZIndex() == 2)
-			g.setColor(Color.blue);
+			g.setColor(Color.yellow);
 		else if(getZIndex() == 3)
 			g.setColor(Color.red);
 		g.fill(sprite);
+		
+		g.drawString("Score: " + yourScore, 8, 50);
+		
+		if (isDead) {
+			g.drawString("GAME OVER, your score is " + yourScore, 225, 230);
+		}
+		
 	}
 
 	@Override
 	public Shape getCollisionBouds() {
-		// TODO Auto-generated method stub
+		System.out.println("HERE");
 		return sprite;
 	}
 
 	@Override
 	public boolean collidesWith(Collidable c) {
-		// TODO Auto-generated method stub
 		return sprite.intersects(c.getCollisionBouds());
 	}
 

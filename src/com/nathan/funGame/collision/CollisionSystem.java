@@ -1,6 +1,8 @@
 package com.nathan.funGame.collision;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CollisionSystem {
 	private static CollisionSystem instance = new CollisionSystem();
@@ -15,6 +17,7 @@ public class CollisionSystem {
 	
 	public void register(Collidable c) {
 		collisionList.add(c);
+		Logger.getLogger(CollisionSystem.class.getSimpleName()).log(Level.INFO, "Registered new entity: " + c.getClass().getSimpleName());
 	}
 	
 	public void unregister(Collidable c) {
@@ -30,8 +33,8 @@ public class CollisionSystem {
 				c1 = collisionList.get(j);
 				c2 = collisionList.get(k);
 				if(c1.collidesWith(c2)) {
-					c1.invokeEvent(new CollisionEvent(c2.getClass().getSimpleName()));
-					c2.invokeEvent(new CollisionEvent(c1.getClass().getSimpleName()));
+					c1.invokeEvent(new CollisionEvent(c2));
+					c2.invokeEvent(new CollisionEvent(c1));
 				}
 			}
 		}
