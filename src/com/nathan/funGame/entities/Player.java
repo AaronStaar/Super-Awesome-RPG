@@ -25,7 +25,7 @@ public class Player extends BaseEntity implements Collidable {
 	
 	public Player(int zIndex) {
 		super(zIndex);
-		sprite = new Rectangle(0, 0, 20, 20);
+		sprite = new Rectangle(850, 530, 20, 20);
 		setupCollision();
 	}
 	
@@ -45,7 +45,7 @@ public class Player extends BaseEntity implements Collidable {
 
 			@Override
 			public void handleEvent(Event e) {
-				if(e.data[0] instanceof RectangleLayer1) {
+				if(e.data[0] instanceof RectangleLayer1 & getZIndex() == 1) {
 					RectangleLayer1 rl1 = (RectangleLayer1) e.data[0];
 					isDead = true;
 				}
@@ -81,8 +81,10 @@ public class Player extends BaseEntity implements Collidable {
 		if (container.getInput().isKeyPressed(Input.KEY_A)) {
 			if(getZIndex() < 3) {
 				EntityManager.getInstance().remove(this);
+				CollisionSystem.getInstance().unregister(this);
 				EntityManager.getInstance().spawn(new Player(getZIndex() + 1, sprite.getCenterX(), sprite.getCenterY(), 
 															sprite.getWidth() + 7, sprite.getHeight() + 7, speed - 70));
+				Game.invokeEvent(new Event("ChangeLayer", new Object[] {getZIndex() + 1}));
 			}
 		} 
 		
@@ -91,6 +93,7 @@ public class Player extends BaseEntity implements Collidable {
 				EntityManager.getInstance().remove(this);
 				EntityManager.getInstance().spawn(new Player(getZIndex() - 1, sprite.getCenterX(), sprite.getCenterY(), 
 						sprite.getWidth() - 7, sprite.getHeight() - 7, speed + 70));
+				Game.invokeEvent(new Event("ChangeLayer", new Object[] {getZIndex() - 1}));
 			}
 		}
 		
@@ -108,7 +111,7 @@ public class Player extends BaseEntity implements Collidable {
 		if(getZIndex() == 1)
 			g.setColor(Color.green);
 		else if(getZIndex() == 2)
-			g.setColor(Color.yellow);
+			g.setColor(Color.cyan);
 		else if(getZIndex() == 3)
 			g.setColor(Color.red);
 		g.fill(sprite);
@@ -116,7 +119,7 @@ public class Player extends BaseEntity implements Collidable {
 		g.drawString("Score: " + yourScore, 8, 50);
 		
 		if (isDead) {
-			g.drawString("GAME OVER, your score is " + yourScore, 900, 530);
+			g.drawString("GAME OVER, your score is " + yourScore, 850, 530);
 			g.setColor(Color.orange);
 		}
 		
@@ -124,7 +127,7 @@ public class Player extends BaseEntity implements Collidable {
 
 	@Override
 	public Shape getCollisionBouds() {
-		System.out.println("HERE");
+		
 		return sprite;
 	}
 

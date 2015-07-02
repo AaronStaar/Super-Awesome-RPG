@@ -1,6 +1,8 @@
 package com.nathan.funGame;
 
 
+import java.util.Random;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,6 +11,8 @@ import org.newdawn.slick.SlickException;
 import com.nathan.funGame.collision.CollisionSystem;
 import com.nathan.funGame.entities.Player;
 import com.nathan.funGame.entities.RectangleLayer1;
+import com.nathan.funGame.entities.SpawnerLayer1;
+import com.nathan.funGame.entities.SpawnerLayer2;
 import com.nathan.funGame.events.Event;
 import com.nathan.funGame.events.EventHandler;
 import com.nathan.funGame.events.EventSystem;
@@ -31,7 +35,6 @@ public class Game extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		EntityManager.getInstance().__renderEntities(container, g);
-		EntityManager.getInstance().spawn(new RectangleLayer1(500, 500));
 	}
 
 	@Override
@@ -39,6 +42,8 @@ public class Game extends BasicGame {
 		bindings = new InputBindings(container.getInput());
 		
 		EntityManager.getInstance().spawn(new Player(1));
+		EntityManager.getInstance().spawn(new SpawnerLayer1());
+		EntityManager.getInstance().spawn(new SpawnerLayer2());
 	}
 
 	@Override
