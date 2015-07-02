@@ -46,7 +46,12 @@ public class Player extends BaseEntity implements Collidable {
 			@Override
 			public void handleEvent(Event e) {
 				if(e.data[0] instanceof RectangleLayer1 & getZIndex() == 1) {
-					RectangleLayer1 rl1 = (RectangleLayer1) e.data[0];
+					isDead = true;
+				}
+				if(e.data[0] instanceof RectangleLayer2 & getZIndex() == 2) {
+					isDead = true;
+				}
+				if(e.data[0] instanceof RectangleLayer3 & getZIndex() == 3) {
 					isDead = true;
 				}
 			}
@@ -56,52 +61,55 @@ public class Player extends BaseEntity implements Collidable {
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) 
-			sprite.setCenterX(sprite.getCenterX() + (speed * 0.001f * delta));
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)) 
-			sprite.setCenterX(sprite.getCenterX() - (speed * 0.001f * delta));
-		if (container.getInput().isKeyDown(Input.KEY_UP)) 
-			sprite.setCenterY(sprite.getCenterY() - (speed * 0.001f * delta));
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)) 
-			sprite.setCenterY(sprite.getCenterY() + (speed * 0.001f * delta));
-		
-		if (sprite.getX() > 1920 - sprite.getWidth()) {
-			sprite.setX(1920 - sprite.getWidth());
-		}
-		if (sprite.getX() < 1) {
-			sprite.setX(0);
-		}
-		if (sprite.getY() > 1080 - sprite.getHeight()) {
-			sprite.setY(1080 -  sprite.getHeight());
-		}
-		if (sprite.getY() < 1) {
-			sprite.setY(0);
-		}
-		
-		if (container.getInput().isKeyPressed(Input.KEY_A)) {
-			if(getZIndex() < 3) {
-				EntityManager.getInstance().remove(this);
-				CollisionSystem.getInstance().unregister(this);
-				EntityManager.getInstance().spawn(new Player(getZIndex() + 1, sprite.getCenterX(), sprite.getCenterY(), 
-															sprite.getWidth() + 7, sprite.getHeight() + 7, speed - 70));
-				Game.invokeEvent(new Event("ChangeLayer", new Object[] {getZIndex() + 1}));
+		if(!isDead) {
+			if (container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+				sprite.setCenterX(sprite.getCenterX() + (speed * 0.001f * delta));
+			if (container.getInput().isKeyDown(Input.KEY_LEFT)) 
+				sprite.setCenterX(sprite.getCenterX() - (speed * 0.001f * delta));
+			if (container.getInput().isKeyDown(Input.KEY_UP)) 
+				sprite.setCenterY(sprite.getCenterY() - (speed * 0.001f * delta));
+			if (container.getInput().isKeyDown(Input.KEY_DOWN)) 
+				sprite.setCenterY(sprite.getCenterY() + (speed * 0.001f * delta));
+
+			if (sprite.getX() > 1920 - sprite.getWidth()) {
+				sprite.setX(1920 - sprite.getWidth());
 			}
-		} 
-		
-		if (container.getInput().isKeyPressed(Input.KEY_D)) {
-			if (getZIndex() > 1) {
-				EntityManager.getInstance().remove(this);
-				EntityManager.getInstance().spawn(new Player(getZIndex() - 1, sprite.getCenterX(), sprite.getCenterY(), 
-						sprite.getWidth() - 7, sprite.getHeight() - 7, speed + 70));
-				Game.invokeEvent(new Event("ChangeLayer", new Object[] {getZIndex() - 1}));
+			if (sprite.getX() < 1) {
+				sprite.setX(0);
 			}
-		}
-		
-		if(!isDead & timer >= 1000) {
-			yourScore += Math.ceil(2) + (sprite.getHeight()) / 4;
-			timer = 0;
-		} else {
-			timer += delta;
+			if (sprite.getY() > 1080 - sprite.getHeight()) {
+				sprite.setY(1080 -  sprite.getHeight());
+			}
+			if (sprite.getY() < 1) {
+				sprite.setY(0);
+			}
+
+			if (container.getInput().isKeyPressed(Input.KEY_A)) {
+				if(getZIndex() < 3) {
+					EntityManager.getInstance().remove(this);
+					CollisionSystem.getInstance().unregister(this);
+					EntityManager.getInstance().spawn(new Player(getZIndex() + 1, sprite.getCenterX(), sprite.getCenterY(), 
+							sprite.getWidth() + 7, sprite.getHeight() + 7, speed - 70));
+					Game.invokeEvent(new Event("ChangeLayer", new Object[] {getZIndex() + 1}));
+				}
+			} 
+
+			if (container.getInput().isKeyPressed(Input.KEY_D)) {
+				if (getZIndex() > 1) {
+					EntityManager.getInstance().remove(this);
+					CollisionSystem.getInstance().unregister(this);
+					EntityManager.getInstance().spawn(new Player(getZIndex() - 1, sprite.getCenterX(), sprite.getCenterY(), 
+							sprite.getWidth() - 7, sprite.getHeight() - 7, speed + 70));
+					Game.invokeEvent(new Event("ChangeLayer", new Object[] {getZIndex() - 1}));
+				}
+			}
+
+			if(timer >= 1000) {
+				yourScore += Math.ceil(2) + (sprite.getHeight()) / 2;
+				timer = 0;
+			} else {
+				timer += delta;
+			}
 		}
 	}
 

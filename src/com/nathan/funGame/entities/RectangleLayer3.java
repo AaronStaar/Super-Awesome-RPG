@@ -15,16 +15,16 @@ import com.nathan.funGame.collision.CollisionSystem;
 import com.nathan.funGame.events.Event;
 import com.nathan.funGame.events.EventHandler;
 
-public class RectangleLayer1 extends BaseEntity implements Collidable {
-	private static final int SPEED = 300;
+public class RectangleLayer3 extends BaseEntity implements Collidable {
+	private static final int SPEED = 500;
 	
 	private Rectangle sprite;
 	private Random r = new Random();
 	private int direction;
-	private static boolean isOutlined = false;
-		
-	public RectangleLayer1(int direction) {
-		super(1);
+	private static boolean isOutlined = true;
+	
+	public RectangleLayer3(int direction) {
+		super(3);
 		this.direction = direction;
 		CollisionSystem.getInstance().register(this);
 		
@@ -42,7 +42,7 @@ public class RectangleLayer1 extends BaseEntity implements Collidable {
 			@Override
 			public void handleEvent(Event e) {
 				int new_layer = (int) e.data[0];
-				if(new_layer == 1)
+				if(new_layer == 3)
 					isOutlined = false;
 				else
 					isOutlined = true;
@@ -50,7 +50,7 @@ public class RectangleLayer1 extends BaseEntity implements Collidable {
 			
 		});
 	}
-	
+
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		if (direction == 0) 
@@ -61,29 +61,26 @@ public class RectangleLayer1 extends BaseEntity implements Collidable {
 			sprite.setX(sprite.getX() + SPEED * 0.001f * delta);
 		if(direction == 3)
 			sprite.setX(sprite.getX() - SPEED * 0.001f * delta);
+
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		g.setColor(Color.green);
+	public void render(GameContainer container, Graphics g)	throws SlickException {
+		g.setColor(Color.red);
 		if(!isOutlined)
 			g.fill(sprite);
 		else
 			g.draw(sprite);
 	}
 
-
-
 	@Override
 	public Shape getCollisionBouds() {
-		// TODO Auto-generated method stub
 		return sprite;
 	}
 
-
-
 	@Override
 	public boolean collidesWith(Collidable c) {
+		// TODO Auto-generated method stub
 		return sprite.intersects(c.getCollisionBouds());
 	}
 

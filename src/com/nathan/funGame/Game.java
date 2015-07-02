@@ -12,7 +12,6 @@ import com.nathan.funGame.collision.CollisionSystem;
 import com.nathan.funGame.entities.Player;
 import com.nathan.funGame.entities.RectangleLayer1;
 import com.nathan.funGame.entities.SpawnerLayer1;
-import com.nathan.funGame.entities.SpawnerLayer2;
 import com.nathan.funGame.events.Event;
 import com.nathan.funGame.events.EventHandler;
 import com.nathan.funGame.events.EventSystem;
@@ -43,7 +42,6 @@ public class Game extends BasicGame {
 		
 		EntityManager.getInstance().spawn(new Player(1));
 		EntityManager.getInstance().spawn(new SpawnerLayer1());
-		EntityManager.getInstance().spawn(new SpawnerLayer2());
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import com.nathan.funGame.EntityManager;
 
 public class SpawnerLayer1 extends BaseEntity {
 
-	private static final int SPAWN_RATE = 125;
+	private static final int SPAWN_RATE = 250;
 	
 	Random r = new Random();
 	int timer = 0;
@@ -23,6 +23,8 @@ public class SpawnerLayer1 extends BaseEntity {
 	public void update(GameContainer container, int delta) throws SlickException {
 		if(timer >= SPAWN_RATE) {
 			EntityManager.getInstance().spawn(new RectangleLayer1(r.nextInt(4)));
+			EntityManager.getInstance().spawn(new RectangleLayer2(r.nextInt(4)));
+			EntityManager.getInstance().spawn(new RectangleLayer3(r.nextInt(4)));
 			timer = 0;
 		} else {
 			timer += delta;
@@ -30,8 +32,7 @@ public class SpawnerLayer1 extends BaseEntity {
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
 		
 	}

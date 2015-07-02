@@ -16,10 +16,12 @@ import com.nathan.funGame.events.Event;
 import com.nathan.funGame.events.EventHandler;
 
 public class RectangleLayer2 extends BaseEntity implements Collidable {
+	private static final int SPEED = 400;
+	
 	private Rectangle sprite;
 	private Random r = new Random();
 	private int direction;
-	private static boolean isOutlined = false;
+	private static boolean isOutlined = true;
 	
 	public RectangleLayer2(int direction) {
 		super(2);
@@ -27,20 +29,20 @@ public class RectangleLayer2 extends BaseEntity implements Collidable {
 		CollisionSystem.getInstance().register(this);
 		
 		if(direction == 0)
-			this.sprite = new Rectangle(r.nextInt(1920), -100, r.nextFloat() * 100, r.nextFloat() * 100);
+			this.sprite = new Rectangle(r.nextInt(1920), -100, r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
 		else if (direction == 1)
-			this.sprite = new Rectangle(r.nextInt(1920), 1180, r.nextFloat() * 100, r.nextFloat() * 100);
+			this.sprite = new Rectangle(r.nextInt(1920), 1180, r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
 		else if (direction == 2)
-			this.sprite = new Rectangle(-100, r.nextInt(1080), r.nextFloat() * 100, r.nextFloat() * 100);
+			this.sprite = new Rectangle(-100, r.nextInt(1080), r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
 		else
-			this.sprite = new Rectangle(2020, r.nextInt(1080), r.nextFloat() * 100, r.nextFloat() * 100);
+			this.sprite = new Rectangle(2020, r.nextInt(1080), r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
 		
 		Game.addEventListener("ChangeLayer", new EventHandler() {
 			
 			@Override
 			public void handleEvent(Event e) {
-				int new_layer1 = (int) e.data[0];
-				if(new_layer1 == 1)
+				int new_layer = (int) e.data[0];
+				if(new_layer == 2)
 					isOutlined = false;
 				else
 					isOutlined = true;
@@ -52,13 +54,13 @@ public class RectangleLayer2 extends BaseEntity implements Collidable {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		if (direction == 0) 
-			sprite.setY(sprite.getY() + 100 * 0.001f * delta);
+			sprite.setY(sprite.getY() + SPEED * 0.001f * delta);
 		if (direction == 1)
-			sprite.setY(sprite.getY() - 100 * 0.001f * delta);
+			sprite.setY(sprite.getY() - SPEED * 0.001f * delta);
 		if (direction == 2)
-			sprite.setX(sprite.getX() + 100 * 0.001f * delta);
+			sprite.setX(sprite.getX() + SPEED * 0.001f * delta);
 		if(direction == 3)
-			sprite.setX(sprite.getX() - 100 * 0.001f * delta);
+			sprite.setX(sprite.getX() - SPEED * 0.001f * delta);
 	}
 
 	@Override
