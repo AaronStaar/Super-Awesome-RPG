@@ -29,13 +29,13 @@ public class RectangleLayer3 extends BaseEntity implements Collidable {
 		CollisionSystem.getInstance().register(this);
 		
 		if(direction == 0)
-			this.sprite = new Rectangle(r.nextInt(1920), -100, r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
+			this.sprite = new Rectangle(r.nextInt(1920), -100, r.nextFloat() * 50 + 50, r.nextFloat() * 50 + 50);
 		else if (direction == 1)
-			this.sprite = new Rectangle(r.nextInt(1920), 1180, r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
+			this.sprite = new Rectangle(r.nextInt(1920), 1180, r.nextFloat() * 50 + 50, r.nextFloat() * 50 + 50);
 		else if (direction == 2)
-			this.sprite = new Rectangle(-100, r.nextInt(1080), r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
+			this.sprite = new Rectangle(-100, r.nextInt(1080), r.nextFloat() * 50 + 50, r.nextFloat() * 50 + 50);
 		else
-			this.sprite = new Rectangle(2020, r.nextInt(1080), r.nextFloat() * 100 + 50, r.nextFloat() * 100 + 50);
+			this.sprite = new Rectangle(2020, r.nextInt(1080), r.nextFloat() * 50 + 50, r.nextFloat() * 50 + 50);
 		
 		Game.addEventListener("ChangeLayer", new EventHandler() {
 			

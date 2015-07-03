@@ -25,7 +25,7 @@ public class Player extends BaseEntity implements Collidable {
 	
 	public Player(int zIndex) {
 		super(zIndex);
-		sprite = new Rectangle(850, 530, 20, 20);
+		sprite = new Rectangle(480, 270, 20, 20);
 		setupCollision();
 	}
 	
@@ -127,7 +127,7 @@ public class Player extends BaseEntity implements Collidable {
 		g.drawString("Score: " + yourScore, 8, 50);
 		
 		if (isDead) {
-			g.drawString("GAME OVER, your score is " + yourScore, 850, 530);
+			g.drawString("GAME OVER, your score is " + yourScore, 420, 270);
 			g.setColor(Color.orange);
 		}
 		

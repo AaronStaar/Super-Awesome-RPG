@@ -10,7 +10,7 @@ import com.nathan.funGame.EntityManager;
 
 public class SpawnerLayer1 extends BaseEntity {
 
-	private static final int SPAWN_RATE = 250;
+	private static final int SPAWN_RATE = 150;
 	
 	Random r = new Random();
 	int timer = 0;
